@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AVControl</string>
+    <string name="avm_status">AVM Status</string>
+    <string name="tv_status">TV Status</string>
+    <string name="tv">TV</string>
+    <string name="usbc">USB-C + Saffire</string>
+    <string name="dex">Dex</string>
+    <string name="power_off">Power off</string>
+    <string name="dimmer">AVM Display</string>
+</resources>
