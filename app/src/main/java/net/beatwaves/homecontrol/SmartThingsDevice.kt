@@ -39,33 +39,7 @@ class SmartThingsDevice : Device() {
 
     private fun inputCommand(input: String) = Command("mediaInputSource", "setInputSource", arrayOf(input))
 
-    private suspend fun getPowerStatus() = scope.async {
-        val statusResponse = api.getStatus().await()
-        if (!statusResponse.isSuccessful)
-        {
-            throw Exception("Failed to get status: ${statusResponse.message()}")
-        }
-
-    statusResponse.body()!!.isPoweredOn
-    }
-
-    private suspend fun powerOn() = scope.async {
-        val repeatTimes = 3;
-        var success = getPowerStatus().await()
-        repeat(3) {
-            if (!success)
-            {
-                sendCommand(powerOnCommand, "power on").await()
-                delay(5000)
-                success = getPowerStatus().await()
-            }
-        }
-
-        if (!success)
-        {
-            throw Exception("Failed to power on after $repeatTimes attempts!")
-        }
-    }
+    private suspend fun powerOn() = sendCommand(powerOnCommand, "power on")
 
     private suspend fun sendCommand(command: Command, description: String): Deferred<Unit> = scope.async {
         val response = api.executeCommand(Commands(arrayOf(command))).await()
